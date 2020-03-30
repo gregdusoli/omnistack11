@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Feather } from '@expo/vector-icons';
-import logoImg from '../../assets/logo.png';
-import styles from './styles';
-import api from '../../services/api';
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, TouchableOpacity, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
+import logoImg from "../../assets/logo.png";
+import styles from "./styles";
+import api from "../../services/api";
 
 export default function Incidents() {
   const [incidents, setIncidents] = useState([]);
@@ -14,7 +14,7 @@ export default function Incidents() {
   const navigation = useNavigation();
 
   function navigateToDetail(incident) {
-    navigation.navigate('Detail', { incident });
+    navigation.navigate("Detail", { incident });
   }
 
   async function loadIncidents() {
@@ -29,12 +29,12 @@ export default function Incidents() {
     setLoading(true);
 
     try {
-      const response = await api.get('incidents', {
+      const response = await api.get("incidents", {
         params: { page }
       });
 
       setIncidents([...incidents, ...response.data]);
-      setTotal(response.headers['x-total-count']);
+      setTotal(response.headers["x-total-count"]);
       setPage(page + 1);
     } catch (error) {
       alert(`Erro ao obter lista de caso: ${error}`);
@@ -57,7 +57,9 @@ export default function Incidents() {
       </View>
 
       <Text style={styles.title}>Bem-vindo!</Text>
-      <Text style={styles.description}>Escolha um dos casos abaixo e salve o dia.</Text>
+      <Text style={styles.description}>
+        Escolha um dos casos abaixo e salve o dia.
+      </Text>
 
       <FlatList
         data={incidents}
@@ -76,9 +78,9 @@ export default function Incidents() {
 
             <Text style={styles.incidentProperty}>VALOR:</Text>
             <Text style={styles.incidentValue}>
-              {Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
+              {Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL"
               }).format(incident.value)}
             </Text>
 
@@ -92,7 +94,6 @@ export default function Incidents() {
           </View>
         )}
       />
-
     </View>
   );
 }
